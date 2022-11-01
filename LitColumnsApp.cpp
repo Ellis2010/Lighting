@@ -435,7 +435,10 @@ void LitColumnsApp::UpdateMainPassCB(const GameTimer& gt)
 	mMainPassCB.Lights[2].Direction = { 0.0f, -0.707f, -0.707f };
 	mMainPassCB.Lights[2].Strength = { 0.15f, 0.15f, 0.15f };
 
-
+	//Red Lights
+	auto frequency = 5.0f;
+	auto lightStrength = 0.5f + sinf(gt.TotalTime() * frequency) * 0.5f;
+	mMainPassCB.Lights[0].Strength = { lightStrength, 0.0f, 0.0f };
 
 	auto currPassCB = mCurrFrameResource->PassCB.get();
 	currPassCB->CopyData(0, mMainPassCB);
