@@ -742,7 +742,7 @@ void LitColumnsApp::BuildMaterials()
 	bricks0->DiffuseSrvHeapIndex = 0;
 	bricks0->DiffuseAlbedo = XMFLOAT4(Colors::LightSteelBlue);
 	bricks0->FresnelR0 = XMFLOAT3(0.02f, 0.02f, 0.02f);
-	bricks0->Roughness = 0.1f;
+	bricks0->Roughness = -5.f;
 
 	//Right pillars and spheres
 	auto stone0 = std::make_unique<Material>();
@@ -751,7 +751,7 @@ void LitColumnsApp::BuildMaterials()
 	stone0->DiffuseSrvHeapIndex = 1;
 	stone0->DiffuseAlbedo = XMFLOAT4(Colors::LightSteelBlue);
 	stone0->FresnelR0 = XMFLOAT3(5.f, 5.f, 5.f);
-	stone0->Roughness = 0.1f;
+	stone0->Roughness = .8f;
  
 	auto tile0 = std::make_unique<Material>();
 	tile0->Name = "tile0";
@@ -831,7 +831,7 @@ void LitColumnsApp::BuildRenderItems()
 		XMStoreFloat4x4(&leftCylRitem->World, rightCylWorld);
 		XMStoreFloat4x4(&leftCylRitem->TexTransform, brickTexTransform);
 		leftCylRitem->ObjCBIndex = objCBIndex++;
-		leftCylRitem->Mat = mMaterials["bricks0"].get();
+		leftCylRitem->Mat = mMaterials["stone0"].get();
 		leftCylRitem->Geo = mGeometries["shapeGeo"].get();
 		leftCylRitem->PrimitiveType = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 		leftCylRitem->IndexCount = leftCylRitem->Geo->DrawArgs["cylinder"].IndexCount;
@@ -841,7 +841,7 @@ void LitColumnsApp::BuildRenderItems()
 		XMStoreFloat4x4(&rightCylRitem->World, leftCylWorld);
 		XMStoreFloat4x4(&rightCylRitem->TexTransform, brickTexTransform);
 		rightCylRitem->ObjCBIndex = objCBIndex++;
-		rightCylRitem->Mat = mMaterials["stone0"].get();
+		rightCylRitem->Mat = mMaterials["bricks0"].get();
 		rightCylRitem->Geo = mGeometries["shapeGeo"].get();
 		rightCylRitem->PrimitiveType = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 		rightCylRitem->IndexCount = rightCylRitem->Geo->DrawArgs["cylinder"].IndexCount;
