@@ -436,9 +436,10 @@ void LitColumnsApp::UpdateMainPassCB(const GameTimer& gt)
 	mMainPassCB.Lights[2].Strength = { 0.15f, 0.15f, 0.15f };
 
 	//Red Lights
-	auto frequency = 5.0f;
-	auto lightStrength = 0.5f + sinf(gt.TotalTime() * frequency) * 0.5f;
+	//auto frequency = 5.0f;
+	auto lightStrength = 0.5f; //+ sinf(gt.TotalTime() * frequency) * 0.5f;
 	mMainPassCB.Lights[0].Strength = { lightStrength, 0.0f, 0.0f };
+	mMainPassCB.Lights[2].Strength = { 0.0f, 0.0f, 0.08 };
 
 	auto currPassCB = mCurrFrameResource->PassCB.get();
 	currPassCB->CopyData(0, mMainPassCB);
@@ -734,21 +735,23 @@ void LitColumnsApp::BuildFrameResources()
 
 void LitColumnsApp::BuildMaterials()
 {
+	//left pillars and spheres
 	auto bricks0 = std::make_unique<Material>();
 	bricks0->Name = "bricks0";
 	bricks0->MatCBIndex = 0;
 	bricks0->DiffuseSrvHeapIndex = 0;
-	bricks0->DiffuseAlbedo = XMFLOAT4(Colors::ForestGreen);
+	bricks0->DiffuseAlbedo = XMFLOAT4(Colors::LightSteelBlue);
 	bricks0->FresnelR0 = XMFLOAT3(0.02f, 0.02f, 0.02f);
 	bricks0->Roughness = 0.1f;
 
+	//Right pillars and spheres
 	auto stone0 = std::make_unique<Material>();
 	stone0->Name = "stone0";
 	stone0->MatCBIndex = 1;
 	stone0->DiffuseSrvHeapIndex = 1;
 	stone0->DiffuseAlbedo = XMFLOAT4(Colors::LightSteelBlue);
-	stone0->FresnelR0 = XMFLOAT3(0.05f, 0.05f, 0.05f);
-	stone0->Roughness = 0.3f;
+	stone0->FresnelR0 = XMFLOAT3(5.f, 5.f, 5.f);
+	stone0->Roughness = 0.1f;
  
 	auto tile0 = std::make_unique<Material>();
 	tile0->Name = "tile0";
@@ -838,7 +841,7 @@ void LitColumnsApp::BuildRenderItems()
 		XMStoreFloat4x4(&rightCylRitem->World, leftCylWorld);
 		XMStoreFloat4x4(&rightCylRitem->TexTransform, brickTexTransform);
 		rightCylRitem->ObjCBIndex = objCBIndex++;
-		rightCylRitem->Mat = mMaterials["bricks0"].get();
+		rightCylRitem->Mat = mMaterials["stone0"].get();
 		rightCylRitem->Geo = mGeometries["shapeGeo"].get();
 		rightCylRitem->PrimitiveType = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 		rightCylRitem->IndexCount = rightCylRitem->Geo->DrawArgs["cylinder"].IndexCount;
@@ -848,7 +851,7 @@ void LitColumnsApp::BuildRenderItems()
 		XMStoreFloat4x4(&leftSphereRitem->World, leftSphereWorld);
 		leftSphereRitem->TexTransform = MathHelper::Identity4x4();
 		leftSphereRitem->ObjCBIndex = objCBIndex++;
-		leftSphereRitem->Mat = mMaterials["stone0"].get();
+		leftSphereRitem->Mat = mMaterials["bricks0"].get();
 		leftSphereRitem->Geo = mGeometries["shapeGeo"].get();
 		leftSphereRitem->PrimitiveType = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 		leftSphereRitem->IndexCount = leftSphereRitem->Geo->DrawArgs["sphere"].IndexCount;
