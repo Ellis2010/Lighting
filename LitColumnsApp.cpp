@@ -741,7 +741,7 @@ void LitColumnsApp::BuildMaterials()
 	bricks0->MatCBIndex = 0;
 	bricks0->DiffuseSrvHeapIndex = 0;
 	bricks0->DiffuseAlbedo = XMFLOAT4(Colors::LightSteelBlue);
-	bricks0->FresnelR0 = XMFLOAT3(0.02f, 0.02f, 0.02f);
+	bricks0->FresnelR0 = XMFLOAT3(0.5f, 0.5f, 0.5f);
 	bricks0->Roughness = -5.f;
 
 	//Right pillars and spheres
@@ -750,8 +750,12 @@ void LitColumnsApp::BuildMaterials()
 	stone0->MatCBIndex = 1;
 	stone0->DiffuseSrvHeapIndex = 1;
 	stone0->DiffuseAlbedo = XMFLOAT4(Colors::LightSteelBlue);
-	stone0->FresnelR0 = XMFLOAT3(5.f, 5.f, 5.f);
-	stone0->Roughness = .8f;
+	stone0->FresnelR0 = XMFLOAT3(0.5f, 0.5f, 0.5f);
+	stone0->Roughness = 0.8f;
+
+	
+
+
  
 	auto tile0 = std::make_unique<Material>();
 	tile0->Name = "tile0";
